@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.List;
 
-@Profile("mock")
 @Service
+@Profile("mock")
 public class MockSubscriberLookupService implements SubscriberLookupService {
     @Override
     public List<Long> getSubscribers() {
