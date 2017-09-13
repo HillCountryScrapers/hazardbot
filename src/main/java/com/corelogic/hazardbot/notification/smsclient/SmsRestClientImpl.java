@@ -1,6 +1,6 @@
 package com.corelogic.hazardbot.notification.smsclient;
 
-import com.twilio.exception.TwilioException;
+import com.corelogic.hazardbot.notification.SmsNotificationException;
 import com.twilio.http.TwilioRestClient;
 import com.twilio.rest.api.v2010.account.MessageCreator;
 import com.twilio.type.PhoneNumber;
@@ -29,7 +29,7 @@ public class SmsRestClientImpl implements SmsRestClient {
     }
 
     @Override
-    public Map<Long, String> sendSms(List<Long> numbers, String content) {
+    public Map<Long, String> sendSms(List<Long> numbers, String content)throws SmsNotificationException {
         Map<Long, String> messages = new HashMap<>();
         for (Long number : numbers) {
             MessageCreator messageCreator = new MessageCreator(
@@ -40,11 +40,13 @@ public class SmsRestClientImpl implements SmsRestClient {
             try {
                 messages.put(number,
                         messageCreator.create(this.twilioRestClient).getStatus().toString());
-            } catch (TwilioException e) {
-                log.error(
-                        "An exception occurred trying to send a message to {}, exception: {}",
-                        number.toString(),
-                        e.getMessage());
+
+
+            }catch (Exception e){
+                String errorMsg = String.format("An exception occurred trying to send a message to {}, exception: {}",
+                        number.toString(), e.getMessage());
+                log.error(errorMsg);
+                throw new SmsNotificationException(errorMsg, e);
             }
         }
         return messages;

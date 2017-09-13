@@ -20,7 +20,7 @@ public class SmsNotificationService implements NotificationService {
     }
 
     @Override
-    public void notifySubscribers(Event event) {
+    public void notifySubscribers(Event event) throws SmsNotificationException{
         this.smsRestClient.sendSms(
                 this.subscriberLookupService.getSubscribers(),
                 event.getContent()
