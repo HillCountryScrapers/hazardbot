@@ -1,0 +1,7 @@
+<h1>Subscribers</h1>
+
+<ul>
+    <li th:each="subscriber: ${subscribers}"
+        th:text="${subscriber.phoneNumber}">512-555-1212
+    </li>
+</ul>

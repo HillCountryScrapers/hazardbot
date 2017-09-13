@@ -1,0 +1,11 @@
+<p>Welcome to Hazard Bot!</p>
+
+<p>Wanna subscribe?</p>
+
+<form action="#" method="post" th:action="@{/subscribers}" th:object="${subscriber}">
+    <label>
+        Cell number:
+        <input name="phoneNumber" th:field="*{phoneNumber}" type="tel"/>
+    </label>
+    <button>Subscribe</button>
+</form>
