@@ -5,7 +5,12 @@
 <form action="#" method="post" th:action="@{/subscribers}" th:object="${subscriber}">
     <label>
         Cell number:
-        <input name="phoneNumber" th:field="*{phoneNumber}" type="tel"/>
+        <input name="phoneNumber"
+               th:field="*{phoneNumber}"
+               type="tel"
+               pattern="^\d{3}-\d{3}-\d{4}$"
+               required="required"
+               title="format: xxx-xxx-xxxx"/>
     </label>
     <button>Subscribe</button>
 </form>
