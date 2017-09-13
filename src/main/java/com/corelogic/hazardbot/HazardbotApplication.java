@@ -3,7 +3,7 @@ package com.corelogic.hazardbot;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(scanBasePackages = {"me.ramswaroop.jbot", "com.corelogic.hazardbot"})
+@SpringBootApplication
 public class HazardbotApplication {
 
 	public static void main(String[] args) {
