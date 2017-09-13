@@ -32,7 +32,7 @@ public class RoadClosureControllerIntegrationTest {
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/roadclosures")
                     .contentType(MediaType.APPLICATION_JSON_UTF8)
-                    .content("{\"location\":\"blah\",\"crossStreets\":\"blahblah\"}")
+                    .content("{\"sr_location\":\"blah\",\"cross_streets\":\"blahblah\"}")
                 )
                 .andDo(print())
                 .andExpect(status().isCreated());
@@ -40,6 +40,6 @@ public class RoadClosureControllerIntegrationTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/roadclosures"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().json("[{\"location\":\"blah\",\"crossStreets\":\"blahblah\"}]"));
+                .andExpect(content().json("[{\"sr_location\":\"blah\",\"cross_streets\":\"blahblah\"}]"));
     }
 }

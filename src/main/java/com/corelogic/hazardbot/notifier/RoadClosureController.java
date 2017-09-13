@@ -23,7 +23,7 @@ public class RoadClosureController {
 
     @GetMapping()
     ResponseEntity<List<RoadClosure>> get() {
-        final List<RoadClosure> body = mockRoadClosureRepository.get();
+        final List<RoadClosure> body = mockRoadClosureRepository.getNewRoadClosureEvents();
         log.info(Arrays.toString(body.toArray()));
         return ResponseEntity.ok(body);
     }

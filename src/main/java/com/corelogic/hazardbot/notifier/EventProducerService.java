@@ -24,7 +24,7 @@ public class EventProducerService {
     @Scheduled(fixedRate = 30000)
     public void checkForEvents() {
         log.info("Firing checkForEvents");
-        final List<RoadClosure> roadClosures = mockRoadClosureRepository.get();
+        final List<RoadClosure> roadClosures = mockRoadClosureRepository.getNewRoadClosureEvents();
         roadClosures.stream().forEach((roadClosure) -> {
             Event roadClosureEvent = new Event(String.format("Road Closure: %s at %s", roadClosure.getLocation(), roadClosure.getCrossStreets()));
             log.info("Road Closure to notify {}", roadClosureEvent.getContent());

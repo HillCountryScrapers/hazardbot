@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class MockRoadClosureRepository {
+public class MockRoadClosureRepository implements  RoadClosureRepository {
 
     private List<RoadClosure> roadClosures = new ArrayList<>();
 
@@ -14,7 +14,8 @@ public class MockRoadClosureRepository {
         roadClosures.add(roadClosure);
     }
 
-    public List<RoadClosure> get() {
+    @Override
+    public List<RoadClosure> getNewRoadClosureEvents() {
         return roadClosures;
     }
 }
