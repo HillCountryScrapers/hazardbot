@@ -25,4 +25,10 @@ public class SubscriberService {
                 .map(subscriberEntity -> new Subscriber(subscriberEntity.getPhoneNumber()))
                 .collect(Collectors.toList());
     }
+
+    public void remove(Subscriber subscriber) {
+        final List<SubscriberEntity> subscriberEntities =
+                subscriberRepository.findAllByPhoneNumber(subscriber.getPhoneNumber());
+        subscriberRepository.delete(subscriberEntities);
+    }
 }

@@ -14,6 +14,10 @@ public class SubscriberEntity {
     public SubscriberEntity() {
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public SubscriberEntity(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }

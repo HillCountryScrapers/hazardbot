@@ -39,4 +39,14 @@ public class SubscriberServiceTest {
         then(subscriberRepository.findAll().get(0).getPhoneNumber())
                 .isEqualTo("123");
     }
+
+    @Test
+    public void remove() throws Exception {
+        subscriberRepository.deleteAll();
+        subscriberRepository.save(new SubscriberEntity("123"));
+
+        subject.remove(new Subscriber("123"));
+
+        then(subscriberRepository.findAll()).hasSize(0);
+    }
 }
