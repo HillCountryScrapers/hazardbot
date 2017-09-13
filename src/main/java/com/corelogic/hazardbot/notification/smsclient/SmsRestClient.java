@@ -1,12 +1,8 @@
 package com.corelogic.hazardbot.notification.smsclient;
 
-import org.springframework.stereotype.Component;
-
 import java.util.List;
+import java.util.Map;
 
-@Component
-public class SmsRestClient {
-    public void sendSms(List<Long> numbers, String content) {
-
-    }
+public interface SmsRestClient {
+    public Map<Long, String> sendSms(List<Long> numbers, String content);
 }
