@@ -48,14 +48,14 @@ public class SubscriberControllerTest {
             .andDo(print())
             .andExpect(status().is3xxRedirection());
 
-        then(subscriberRepository.countByPhoneNumber("512-555-1212")).isEqualTo(1);
+        then(subscriberRepository.countByPhoneNumber("5125551212")).isEqualTo(1);
     }
 
     @Test
     public void removeSubscriber() throws Exception {
         final SubscriberEntity subscriberEntity =
             subscriberRepository.saveAndFlush(
-                new SubscriberEntity("512-111-1111", "78758")
+                new SubscriberEntity("5121111111", "78758")
             );
 
         mockMvc.perform(
@@ -70,7 +70,7 @@ public class SubscriberControllerTest {
     @Test
     public void createSubscriber_whenSubscriberAlreadyExists_ShowsError() throws Exception {
 
-        SubscriberEntity subscriberEntity = new SubscriberEntity("512-555-1212", null);
+        SubscriberEntity subscriberEntity = new SubscriberEntity("5125551212", null);
         subscriberRepository.saveAndFlush(subscriberEntity);
 
         mockMvc.perform(
@@ -80,7 +80,7 @@ public class SubscriberControllerTest {
             .andDo(print())
             .andExpect(status().isOk());
 
-        then(subscriberRepository.countByPhoneNumber("512-555-1212")).isEqualTo(1);
+        then(subscriberRepository.countByPhoneNumber("5125551212")).isEqualTo(1);
     }
 
 }

@@ -9,17 +9,20 @@ import java.util.stream.Collectors;
 @Service
 public class SubscriberService {
 
+    private final PhoneNumberFormatter phoneNumberFormatter;
     private SubscriberRepository subscriberRepository;
 
     @Autowired
-    public SubscriberService(SubscriberRepository subscriberRepository) {
+    public SubscriberService(SubscriberRepository subscriberRepository,
+                             PhoneNumberFormatter phoneNumberFormatter) {
         this.subscriberRepository = subscriberRepository;
+        this.phoneNumberFormatter = phoneNumberFormatter;
     }
 
     public void create(Subscriber subscriber) {
         subscriberRepository.saveAndFlush(
             new SubscriberEntity(
-                subscriber.getPhoneNumber(),
+                phoneNumberFormatter.strip(subscriber.getPhoneNumber()),
                 subscriber.getPostalCode()
             )
         );
@@ -29,7 +32,7 @@ public class SubscriberService {
         return subscriberRepository.findAll().stream()
             .map(
                 subscriberEntity -> new Subscriber(
-                    subscriberEntity.getPhoneNumber(),
+                    phoneNumberFormatter.format(subscriberEntity.getPhoneNumber()),
                     subscriberEntity.getId(),
                     subscriberEntity.getPostalCode()
                 )
@@ -42,7 +45,16 @@ public class SubscriberService {
     }
 
     public Subscriber getSubscriber(String phoneNumber) {
-        final SubscriberEntity subscriberEntity = subscriberRepository.findByPhoneNumber(phoneNumber);
-        return subscriberEntity == null ? null : new Subscriber(subscriberEntity.getPhoneNumber(), subscriberEntity.getId(), subscriberEntity.getPostalCode());
+        final String strippedPhoneNumber = phoneNumberFormatter.strip(phoneNumber);
+
+        final SubscriberEntity subscriberEntity =
+            subscriberRepository.findByPhoneNumber(strippedPhoneNumber);
+
+        return subscriberEntity == null ? null : new Subscriber(
+            subscriberEntity.getPhoneNumber(),
+            subscriberEntity.getId(),
+            subscriberEntity.getPostalCode()
+        );
     }
+
 }

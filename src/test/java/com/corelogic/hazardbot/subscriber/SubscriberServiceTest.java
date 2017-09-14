@@ -9,6 +9,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
 
+import java.util.List;
+
 import static org.assertj.core.api.BDDAssertions.then;
 
 @RunWith(SpringRunner.class)
@@ -23,44 +25,45 @@ public class SubscriberServiceTest {
 
     @Test
     public void create() throws Exception {
-        int size = subscriberRepository.findAll().size();
-        final Subscriber subscriber = new Subscriber("123", 1L, "78758");
+        subscriberRepository.deleteAll();
+        final Subscriber subscriber = new Subscriber("512-555-1212", 1L, "78758");
         subject.create(subscriber);
-
-        then(subscriberRepository.findAll()).hasSize(size + 1);
+        final List<SubscriberEntity> entities = subscriberRepository.findAll();
+        then(entities).hasSize(1);
+        then(entities.get(0).getPhoneNumber()).isEqualTo("5125551212");
     }
 
     @Test
     public void getSubscribers() throws Exception {
         subscriberRepository.deleteAll();
-        subscriberRepository.save(new SubscriberEntity("123", "78758"));
+        subscriberRepository.save(new SubscriberEntity("5125551212", "78758"));
 
         then(subject.getSubscribers()).hasSize(1);
         then(subject.getSubscribers().get(0).getPhoneNumber())
-            .isEqualTo("123");
+            .isEqualTo("512-555-1212");
     }
 
     @Test
     public void getSubscriber() throws Exception {
         subscriberRepository.deleteAll();
-        subscriberRepository.save(new SubscriberEntity("123", "78758"));
+        subscriberRepository.save(new SubscriberEntity("5125551212", "78758"));
 
-        then(subject.getSubscriber("123").getPhoneNumber()).isEqualTo("123");
+        then(subject.getSubscriber("5125551212").getPhoneNumber()).isEqualTo("5125551212");
     }
 
     @Test
     public void getSubscriber_whenNotFound_returnsNull() throws Exception {
         subscriberRepository.deleteAll();
-        subscriberRepository.save(new SubscriberEntity("123", "78758"));
+        subscriberRepository.save(new SubscriberEntity("5125551212", "78758"));
 
-        then(subject.getSubscriber("456")).isNull();
+        then(subject.getSubscriber("5125551213")).isNull();
     }
 
     @Test
     public void remove() throws Exception {
         subscriberRepository.deleteAll();
         final SubscriberEntity subscriberEntity =
-            subscriberRepository.save(new SubscriberEntity("123", "78758"));
+            subscriberRepository.save(new SubscriberEntity("5125551212", "78758"));
 
         subject.remove(subscriberEntity.getId());
 
