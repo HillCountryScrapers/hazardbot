@@ -26,3 +26,5 @@ nbdist/
 .nb-gradle/
 
 .envrc
+
+.DS_Store

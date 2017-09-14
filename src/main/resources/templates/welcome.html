@@ -5,8 +5,20 @@
 </head>
 <body>
 
+<div class="title">
+    <div class="container-fluid">
+        <h1 class="primary-title">
+            <i class="fa fa-hand-spock-o" aria-hidden="true"></i>
+            CoreLogic HazardBot
+        </h1>
+    </div>
+</div>
+
 <div class="container">
-    <h1>Welcome to Hazard Bot!</h1>
+    <p class="text-bright-blue">
+        <i class="fa fa-info-circle" aria-hidden="true"></i>
+        Please Enter Phone Number for registration
+    </p>
 
     <form th:method="post"
           th:action="@{/subscribers}"
@@ -44,6 +56,24 @@
     </form>
 
 </div>
+
+<footer>
+    <div class="footer-image"></div>
+    <div>
+        2017 Copyright CoreLogic. All Rights Reserved.
+    </div>
+    <div>
+        <ol>
+            <li><a href="#">About Our Company</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">FAQs</a></li>
+            <li><a href="#">Sitemap</a></li>
+            <li><a href="#">Terms of Use</a></li>
+            <li><a href="#">Policies</a></li>
+        </ol>
+    </div>
+</footer>
+
 </body>
 </html>
 
