@@ -3,11 +3,7 @@ package com.corelogic.hazardbot.subscriber;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -17,7 +13,7 @@ public class SubscriberEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
+    @Column(unique = true, nullable = false)
     private String phoneNumber;
 
     private String postalCode;
