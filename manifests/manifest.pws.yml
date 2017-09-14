@@ -8,3 +8,5 @@ applications:
   buildpack: java_buildpack
   services:
     - hazardbot-mysql
+  env:
+    SPRING_PROFILES_ACTIVE: pws
