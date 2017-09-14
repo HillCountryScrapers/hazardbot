@@ -35,9 +35,25 @@ public class SubscriberServiceTest {
         subscriberRepository.deleteAll();
         subscriberRepository.save(new SubscriberEntity("123", "78758"));
 
-        then(subscriberRepository.findAll()).hasSize(1);
-        then(subscriberRepository.findAll().get(0).getPhoneNumber())
+        then(subject.getSubscribers()).hasSize(1);
+        then(subject.getSubscribers().get(0).getPhoneNumber())
             .isEqualTo("123");
+    }
+
+    @Test
+    public void getSubscriber() throws Exception {
+        subscriberRepository.deleteAll();
+        subscriberRepository.save(new SubscriberEntity("123", "78758"));
+
+        then(subject.getSubscriber("123").getPhoneNumber()).isEqualTo("123");
+    }
+
+    @Test
+    public void getSubscriber_whenNotFound_returnsNull() throws Exception {
+        subscriberRepository.deleteAll();
+        subscriberRepository.save(new SubscriberEntity("123", "78758"));
+
+        then(subject.getSubscriber("456")).isNull();
     }
 
     @Test

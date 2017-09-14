@@ -30,7 +30,7 @@
     <form th:method="post"
           th:action="@{/subscribers}"
           th:object="${subscriber}">
-        <div class="form-group">
+        <div class="form-group" th:classappend="${error} ? has-error">
             <label>
                 Cell number:
                 <span class="input-group">
@@ -44,6 +44,7 @@
                            placeholder="xxx-xxx-xxxx"/>
                 </span>
             </label>
+            <div class="error-message">Phone number already registered</div>
         </div>
 
         <div class="form-group">

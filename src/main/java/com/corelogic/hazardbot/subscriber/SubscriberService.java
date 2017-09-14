@@ -40,4 +40,9 @@ public class SubscriberService {
     public void remove(long subscriberId) {
         subscriberRepository.delete(subscriberId);
     }
+
+    public Subscriber getSubscriber(String phoneNumber) {
+        final SubscriberEntity subscriberEntity = subscriberRepository.findByPhoneNumber(phoneNumber);
+        return subscriberEntity == null ? null : new Subscriber(subscriberEntity.getPhoneNumber(), subscriberEntity.getId(), subscriberEntity.getPostalCode());
+    }
 }

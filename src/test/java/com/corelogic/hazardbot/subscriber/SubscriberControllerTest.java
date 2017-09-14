@@ -66,4 +66,21 @@ public class SubscriberControllerTest {
 
         then(subscriberRepository.findOne(subscriberEntity.getId())).isNull();
     }
+
+    @Test
+    public void createSubscriber_whenSubscriberAlreadyExists_ShowsError() throws Exception {
+
+        SubscriberEntity subscriberEntity = new SubscriberEntity("512-555-1212", null);
+        subscriberRepository.saveAndFlush(subscriberEntity);
+
+        mockMvc.perform(
+            post("/subscribers")
+                .param("phoneNumber", "512-555-1212")
+        )
+            .andDo(print())
+            .andExpect(status().isOk());
+
+        then(subscriberRepository.countByPhoneNumber("512-555-1212")).isEqualTo(1);
+    }
+
 }

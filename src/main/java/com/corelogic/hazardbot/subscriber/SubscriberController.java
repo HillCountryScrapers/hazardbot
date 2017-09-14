@@ -28,8 +28,16 @@ public class SubscriberController {
     @PostMapping
     public ModelAndView createSubscriber(@ModelAttribute Subscriber subscriber) {
         logger.info("Creating subscriber {}", subscriber.getPhoneNumber());
-        subscriberService.create(subscriber);
-        return new ModelAndView("redirect:/subscribers");
+
+        if (subscriberService.getSubscriber(subscriber.getPhoneNumber()) == null) {
+            subscriberService.create(subscriber);
+            return new ModelAndView("redirect:/subscribers");
+
+        } else {
+            ModelAndView model = new ModelAndView("/welcome");
+            model.addObject("error", "Phone number already exists");
+            return model;
+        }
     }
 
     @DeleteMapping("{id}")
