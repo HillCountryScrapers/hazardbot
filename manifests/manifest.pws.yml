@@ -1,0 +1,10 @@
+---
+applications:
+- name: hazardbot
+  memory: 1G
+  disk_quota: 500M
+  instances: 1
+  path: ../build/libs/hazardbot-0.0.1-SNAPSHOT.jar
+  buildpack: java_buildpack
+  services:
+    - hazardbot-mysql
