@@ -17,7 +17,9 @@ public class SubscriberService {
     }
 
     public void create(Subscriber subscriber) {
-        subscriberRepository.saveAndFlush(new SubscriberEntity(subscriber.getPhoneNumber()));
+        subscriberRepository.saveAndFlush(
+            new SubscriberEntity(subscriber.getPhoneNumber())
+        );
     }
 
     public List<Subscriber> getSubscribers() {
