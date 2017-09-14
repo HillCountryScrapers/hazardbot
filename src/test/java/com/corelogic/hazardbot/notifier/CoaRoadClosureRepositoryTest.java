@@ -22,14 +22,14 @@ public class CoaRoadClosureRepositoryTest {
     public void getNewRoadClosureEvents_returnsClosuresNotAlreadyInList() throws Exception {
 
         List<RoadClosure> oldRoadClosureList = Arrays.asList(
-                new RoadClosure("location1", "cross streets1")
+                new RoadClosure("location1", "cross streets1", "78758")
         );
         List<RoadClosure> newRoadClosureList = Arrays.asList(
-                new RoadClosure("location1", "cross streets1"),
-                new RoadClosure("location2", "cross streets2")
+                new RoadClosure("location1", "cross streets1", "78758"),
+                new RoadClosure("location2", "cross streets2", "78758")
         );
         List<RoadClosure> expectedRoadClosureList = Arrays.asList(
-                new RoadClosure("location2", "cross streets2")
+                new RoadClosure("location2", "cross streets2", "78758")
         );
 
         when(mockCoaRoadClosureRestService.getRoadClosures())

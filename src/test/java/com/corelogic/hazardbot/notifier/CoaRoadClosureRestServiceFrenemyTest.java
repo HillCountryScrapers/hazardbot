@@ -10,6 +10,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.notNullValue;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -24,5 +25,6 @@ public class CoaRoadClosureRestServiceFrenemyTest {
         final List<RoadClosure> roadClosures = coaRoadClosureRestService.getRoadClosures();
 
         assertThat(roadClosures.size(), greaterThan(1));
+        assertThat(roadClosures.get(0).getPostalCode(), notNullValue());
     }
 }

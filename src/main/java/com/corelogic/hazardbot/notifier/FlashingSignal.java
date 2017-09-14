@@ -15,4 +15,9 @@ public class FlashingSignal implements  Outage {
     public Event getEvent() {
         return new Event(String.format("Traffic signal outage at %s", locationName));
     }
+
+    @Override
+    public String getPostalCode() {
+        return "78758";
+    }
 }

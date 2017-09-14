@@ -19,6 +19,8 @@ public class RoadClosure implements Outage {
     private String location;
     @JsonProperty("cross_streets")
     private String crossStreets;
+    @JsonProperty("zip_code")
+    private String postalCode;
 
     @Override
     public Event getEvent() {
