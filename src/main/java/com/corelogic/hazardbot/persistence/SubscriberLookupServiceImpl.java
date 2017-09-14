@@ -19,11 +19,12 @@ public class SubscriberLookupServiceImpl implements SubscriberLookupService {
         this.subscriberRepository = subscriberRepository;
     }
 
-    public List<Subscriber> getSubscribers() {
+    public List<Subscriber> getSubscribers(String postalCode) {
         return subscriberRepository.findAll().stream()
             .map((subscriberEntity) -> new Subscriber(subscriberEntity.getPhoneNumber(),
                 subscriberEntity.getId(),
                 subscriberEntity.getPostalCode()))
+            .filter((subscriber) -> subscriber.getPostalCode() == null || subscriber.getPostalCode().equals(postalCode))
             .collect(Collectors.toList());
     }
 }

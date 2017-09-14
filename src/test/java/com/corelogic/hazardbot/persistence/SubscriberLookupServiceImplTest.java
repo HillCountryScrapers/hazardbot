@@ -25,13 +25,14 @@ public class SubscriberLookupServiceImplTest {
         SubscriberLookupServiceImpl subject = new SubscriberLookupServiceImpl(mockSubscriberRepository);
 
         when(mockSubscriberRepository.findAll()).thenReturn(
-                Arrays.asList(
-                        new SubscriberEntity("123", "78758"),
-                        new SubscriberEntity("456", "78758"),
-                        new SubscriberEntity("789", "78758")
-                )
+            Arrays.asList(
+                new SubscriberEntity("123", "78758"),
+                new SubscriberEntity("456", "78758"),
+                new SubscriberEntity("789", "78739"),
+                new SubscriberEntity("789", null)
+            )
         );
-        final List<Subscriber> subscribers = subject.getSubscribers();
+        final List<Subscriber> subscribers = subject.getSubscribers("78758");
 
         verify(mockSubscriberRepository).findAll();
         BDDAssertions.then(subscribers).hasSize(3);

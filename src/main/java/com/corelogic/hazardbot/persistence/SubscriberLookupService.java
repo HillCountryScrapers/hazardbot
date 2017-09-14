@@ -5,5 +5,5 @@ import com.corelogic.hazardbot.subscriber.Subscriber;
 import java.util.List;
 
 public interface SubscriberLookupService {
-    List<Subscriber> getSubscribers();
+    List<Subscriber> getSubscribers(String postalCode);
 }
