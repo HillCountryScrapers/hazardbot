@@ -32,31 +32,19 @@ public class EventProducerService {
     public void checkForEvents() {
         log.info("Firing checkForEvents");
         final List<RoadClosure> roadClosures = stubRoadClosureRepository.getNewRoadClosureEvents();
-        handleRoadClosures(roadClosures);
+        handleOutage(roadClosures);
         final List<RoadClosure> coaRoadClosures = coaRoadClosureRepository.getNewRoadClosureEvents();
-        handleRoadClosures(coaRoadClosures);
+        handleOutage(coaRoadClosures);
         final List<FlashingSignal> coaTrafficSignalFlash = coaTrafficSignalFlashRepository.getNewTrafficSignalFlash();
-        handleFlashingSignals(coaTrafficSignalFlash);
+        handleOutage(coaTrafficSignalFlash);
     }
 
-    private void handleFlashingSignals(List<FlashingSignal> coaTrafficSignalFlash) {
-        coaTrafficSignalFlash.stream().forEach((trafficSignal) -> {
-            Event flashingSignalEvent = new Event(String.format("Traffic signal outage at %s", trafficSignal.getLocationName()));
-            log.info("Flashing Signal Event to notify {}", flashingSignalEvent.getContent());
+    private void handleOutage(List<? extends Outage> outages) {
+        outages.stream().forEach((outage) -> {
+            Event eventToNotify = outage.getEvent();
+            log.info("Event to notify {}", eventToNotify.getContent());
             try {
-                notificationService.notifySubscribers(flashingSignalEvent);
-            } catch (SmsNotificationException e) {
-                log.error(e.getMessage(), e);
-            }
-        });
-    }
-
-    private void handleRoadClosures(List<RoadClosure> roadClosures) {
-        roadClosures.stream().forEach((roadClosure) -> {
-            Event roadClosureEvent = new Event(String.format("Road Closure: %s at %s", roadClosure.getLocation(), roadClosure.getCrossStreets()));
-            log.info("Road Closure to notify {}", roadClosureEvent.getContent());
-            try {
-                notificationService.notifySubscribers(roadClosureEvent);
+                notificationService.notifySubscribers(eventToNotify);
             } catch (SmsNotificationException e) {
                 log.error(e.getMessage(), e);
             }
