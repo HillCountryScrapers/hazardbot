@@ -11,7 +11,7 @@ import java.util.List;
 @Profile("mock")
 public class MockSubscriberLookupService implements SubscriberLookupService {
     @Override
-    public List<Subscriber> getSubscribers() {
+    public List<Subscriber> getSubscribers(String postalCode) {
         return Arrays.asList(
             new Subscriber("123456789", 0L, "78739"),
             new Subscriber("234567894", 1L, "78759"),
