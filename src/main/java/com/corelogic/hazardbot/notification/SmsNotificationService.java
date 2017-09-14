@@ -12,15 +12,14 @@ public class SmsNotificationService implements NotificationService {
     private final SubscriberLookupService subscriberLookupService;
 
     @Autowired
-    public SmsNotificationService(
-            SmsRestClient smsRestClient,
-            SubscriberLookupService subscriberLookupService) {
+    public SmsNotificationService(SmsRestClient smsRestClient,
+                                  SubscriberLookupService subscriberLookupService) {
         this.smsRestClient = smsRestClient;
         this.subscriberLookupService = subscriberLookupService;
     }
 
     @Override
-    public void notifySubscribers(Event event) throws SmsNotificationException{
+    public void notifySubscribers(Event event) {
         this.smsRestClient.sendSms(
                 this.subscriberLookupService.getSubscribers(),
                 event.getContent()

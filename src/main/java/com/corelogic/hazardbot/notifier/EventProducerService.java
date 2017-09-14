@@ -2,7 +2,6 @@ package com.corelogic.hazardbot.notifier;
 
 import com.corelogic.hazardbot.Event;
 import com.corelogic.hazardbot.notification.NotificationService;
-import com.corelogic.hazardbot.notification.SmsNotificationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -43,11 +42,8 @@ public class EventProducerService {
         outages.stream().forEach((outage) -> {
             Event eventToNotify = outage.getEvent();
             log.info("Event to notify {}", eventToNotify.getContent());
-            try {
-                notificationService.notifySubscribers(eventToNotify);
-            } catch (SmsNotificationException e) {
-                log.error(e.getMessage(), e);
-            }
+
+            notificationService.notifySubscribers(eventToNotify);
         });
     }
 }

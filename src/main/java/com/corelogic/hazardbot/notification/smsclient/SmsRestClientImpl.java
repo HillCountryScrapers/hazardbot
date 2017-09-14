@@ -1,54 +1,37 @@
 package com.corelogic.hazardbot.notification.smsclient;
 
-import com.corelogic.hazardbot.notification.SmsNotificationException;
 import com.twilio.http.TwilioRestClient;
-import com.twilio.rest.api.v2010.account.MessageCreator;
-import com.twilio.type.PhoneNumber;
+import com.twilio.rest.api.v2010.account.Message;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Profile("!mock")
 @Component
 @Slf4j
 public class SmsRestClientImpl implements SmsRestClient {
     private final TwilioRestClient twilioRestClient;
-    private final String twilioNumber;
+    private final MessageCreatorProvider messageCreatorProvider;
 
-    public SmsRestClientImpl(SmsCredentials smsCredentials) {
-        this.twilioRestClient =
-                new TwilioRestClient.Builder(
-                        smsCredentials.getAccountSid(),
-                        smsCredentials.getAuthToken()
-                ).build();
-        this.twilioNumber = smsCredentials.getPhoneNumber();
+    public SmsRestClientImpl(TwilioRestClient twilioRestClient,
+                             MessageCreatorProvider messageCreatorProvider) {
+        this.twilioRestClient = twilioRestClient;
+        this.messageCreatorProvider = messageCreatorProvider;
     }
 
     @Override
-    public Map<String, String> sendSms(List<String> numbers, String content)throws SmsNotificationException {
-        Map<String, String> messages = new HashMap<>();
+    public void sendSms(List<String> numbers, String content) {
         for (String number : numbers) {
-            MessageCreator messageCreator = new MessageCreator(
-                    new PhoneNumber(number),
-                    new PhoneNumber(this.twilioNumber),
-                    content);
-            // messageCreator.setMediaUrl(mediaUrl);
             try {
-                messages.put(number,
-                        messageCreator.create(this.twilioRestClient).getStatus().toString());
-
-
-            }catch (Exception e){
-                String errorMsg = String.format("An exception occurred trying to send a message to {}, exception: {}",
-                        number.toString(), e.getMessage());
+                final Message message = messageCreatorProvider.get(number, content).create(this.twilioRestClient);
+                log.info("message created for number {}, status: {}", number, message.getStatus().toString());
+            } catch (Exception e) {
+                String errorMsg = String.format("An exception occurred trying to send a message to %s, exception: %s",
+                        number, e.getMessage());
                 log.error(errorMsg);
-                throw new SmsNotificationException(errorMsg, e);
             }
         }
-        return messages;
     }
 }

@@ -1,27 +1,22 @@
 package com.corelogic.hazardbot.notification.smsclient;
 
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 
-import java.util.Map;
+import javax.validation.constraints.NotNull;
 
+@Data
 @Component
+@ConfigurationProperties("twilio")
+@Validated
 public class SmsCredentials {
-    private Map<String, String> env;
-
-    public SmsCredentials() {
-        env = System.getenv();
-    }
-
-    public String getAccountSid() {
-        return env.get("TWILIO_ACCOUNT_SID");
-    }
-
-    public String getAuthToken() {
-        return env.get("TWILIO_AUTH_TOKEN");
-    }
-
-    public String getPhoneNumber() {
-        return env.get("TWILIO_PHONE_NUMBER");
-    }
+    @NotNull
+    private String accountSid;
+    @NotNull
+    private String authToken;
+    @NotNull
+    private String phoneNumber;
 }
 
