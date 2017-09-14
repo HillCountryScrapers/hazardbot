@@ -15,16 +15,15 @@
 </div>
 
 <div class="container">
-    <!--<p class="text-bright-blue">-->
-        <!--<i class="fa fa-info-circle" aria-hidden="true"></i>-->
-        <!--Please Enter Phone Number for registration-->
-        <!--<span><a th:href="@{/subscribers}">Subscribers</a></span>-->
-    <!--</p>-->
-    <div class="style-guide-grid">
-        <div class="row">
-            <div class="col-md-8 text-bright-blue"><i class="fa fa-info-circle" aria-hidden="true"></i>
-                Please Enter Phone Number for registration</div>
-            <div class="col-md-4"><a th:href="@{/subscribers}" class="text-red">View Subscribers</a></div>
+    <div class="row">
+        <div class="col-md-4 text-bright-blue"><i class="fa fa-info-circle" aria-hidden="true"></i>
+            Please Enter Phone Number for registration
+        </div>
+        <div class="col-md-4">
+            <a th:href="@{/currentHazards}" class="text-green">Current Hazards by Postal Code</a>
+        </div>
+        <div class="col-md-4">
+            <a th:href="@{/subscribers}" class="text-red">View Subscribers</a>
         </div>
     </div>
 

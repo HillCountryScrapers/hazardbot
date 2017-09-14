@@ -13,24 +13,30 @@ import java.util.List;
 public class CoaRoadClosureRepository implements RoadClosureRepository {
 
     private final CoaRoadClosureRestService coaRoadClosureRestService;
-    List<RoadClosure> existingRoadClosure = new ArrayList<>();
+    private List<RoadClosure> existingRoadClosures = new ArrayList<>();
 
     public CoaRoadClosureRepository(CoaRoadClosureRestService coaRoadClosureRestService) {
         this.coaRoadClosureRestService = coaRoadClosureRestService;
-        this.existingRoadClosure = coaRoadClosureRestService.getRoadClosures();
+        this.existingRoadClosures = coaRoadClosureRestService.getRoadClosures();
     }
 
     @Override
     public List<RoadClosure> getNewRoadClosureEvents() {
-
         final List<RoadClosure> currentRoadClosures = coaRoadClosureRestService.getRoadClosures();
 
         final Sets.SetView<RoadClosure> difference = Sets.difference(
-                new HashSet<>(currentRoadClosures),
-                new HashSet<>(this.existingRoadClosure)
+            new HashSet<>(currentRoadClosures),
+            new HashSet<>(this.existingRoadClosures)
         );
 
+        existingRoadClosures = currentRoadClosures;
+
         return new ArrayList<>(difference);
+    }
+
+    @Override
+    public List<RoadClosure> getAllRoadClosureEvents() {
+        return existingRoadClosures;
     }
 
 }

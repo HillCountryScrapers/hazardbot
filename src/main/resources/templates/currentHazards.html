@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link type="text/css" th:href="@{/css/corelogic-ui.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="title">
+    <div class="container-fluid">
+        <h1 class="primary-title">
+            <i class="fa fa-hand-spock-o" aria-hidden="true"></i>
+            <a th:href="@{/}">CoreLogic HazardBot</a>
+        </h1>
+    </div>
+</div>
+
+<div class="container">
+
+    <h1>Current Hazards</h1>
+    <form th:method="get"
+          th:action="@{/currentHazards}"
+          class="form-inline">
+
+        <div class="form-group">
+            <label>
+                Postal Code:
+                <input class="form-control"
+                       name="postalCode"
+                       type="text"
+                       pattern="^\d{5}$"
+                       th:value="${postalCode}"
+                       placeholder="xxxxx"/>
+            </label>
+        </div>
+        <button class="btn btn-primary">Get Hazards by Postal Code</button>
+    </form>
+
+    <hr/>
+
+    <ul>
+        <li th:each="event: ${events}" th:text="${event.content}">foo</li>
+    </ul>
+</div>
+
+
+<footer>
+    <div class="footer-image"></div>
+    <div>
+        2017 Copyright CoreLogic. All Rights Reserved.
+    </div>
+    <div>
+        <ol>
+            <li><a href="#">About Our Company</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">FAQs</a></li>
+            <li><a href="#">Sitemap</a></li>
+            <li><a href="#">Terms of Use</a></li>
+            <li><a href="#">Policies</a></li>
+        </ol>
+    </div>
+</footer>
+
+</body>
+</html>
