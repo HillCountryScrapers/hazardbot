@@ -11,6 +11,6 @@ import java.util.List;
 public class MockSmsRestClient implements SmsRestClient {
 
     @Override
-    public void sendSms(List<Subscriber> subscribers, String content) {
+    public void sendSms(List<Subscriber> subscribers, SmsContent smsContent) {
     }
 }

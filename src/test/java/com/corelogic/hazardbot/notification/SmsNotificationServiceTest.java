@@ -1,6 +1,7 @@
 package com.corelogic.hazardbot.notification;
 
 import com.corelogic.hazardbot.Event;
+import com.corelogic.hazardbot.notification.smsclient.SmsContent;
 import com.corelogic.hazardbot.notification.smsclient.SmsRestClientImpl;
 import com.corelogic.hazardbot.subscriber.Subscriber;
 import org.junit.Test;
@@ -23,7 +24,8 @@ public class SmsNotificationServiceTest {
         SmsNotificationService subject = new SmsNotificationService(mocksmsRestClientImpl);
 
         Event event = new Event("Something happened!");
+        SmsContent smsContent = new SmsContent("Something happened!");
         subject.notifySubscribers(event, subscribers);
-        verify(mocksmsRestClientImpl).sendSms(subscribers, event.getContent());
+        verify(mocksmsRestClientImpl).sendSms(subscribers, smsContent);
     }
 }

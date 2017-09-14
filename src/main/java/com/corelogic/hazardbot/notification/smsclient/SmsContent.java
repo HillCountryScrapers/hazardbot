@@ -1,16 +1,15 @@
-package com.corelogic.hazardbot;
+package com.corelogic.hazardbot.notification.smsclient;
 
-import com.corelogic.hazardbot.notification.smsclient.EventType;
 import lombok.AllArgsConstructor;
 import lombok.Value;
 
 @Value
 @AllArgsConstructor
-public class Event {
+public class SmsContent {
     private String content;
     private EventType eventType;
 
-    public Event(String content) {
+    public SmsContent(String content) {
         this.content = content;
         this.eventType = EventType.CLOWN;
     }

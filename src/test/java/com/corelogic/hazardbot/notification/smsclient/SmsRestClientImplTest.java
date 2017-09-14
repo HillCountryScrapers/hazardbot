@@ -36,10 +36,10 @@ public class SmsRestClientImplTest {
             Arrays.asList(
                 new Subscriber("123", null, null)
             ),
-            "content"
+            new SmsContent("content")
         );
 
-        verify(mockMessageCreatorProvider).get("123", "content");
+        verify(mockMessageCreatorProvider).get("123", "🤡content");
         verify(mockMessageCreator).create(mockTwilioRestClient);
     }
 
@@ -61,8 +61,15 @@ public class SmsRestClientImplTest {
             Arrays.asList(
                 new Subscriber("123", null, null)
             ),
-            "content"
+            new SmsContent("content")
         );
     }
 
+    @Test
+    public void name() throws Exception {
+        StringBuffer sb = new StringBuffer();
+        sb.append(Character.toChars(127467));
+        sb.append(Character.toChars(127479));
+        System.out.println(sb);
+    }
 }

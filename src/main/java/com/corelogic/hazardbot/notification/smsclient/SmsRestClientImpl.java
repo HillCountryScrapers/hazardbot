@@ -23,7 +23,18 @@ public class SmsRestClientImpl implements SmsRestClient {
     }
 
     @Override
-    public void sendSms(List<Subscriber> subscribers, String content) {
+    public void sendSms(List<Subscriber> subscribers, SmsContent smsContent) {
+        String content;
+        switch (smsContent.getEventType()) {
+            case ROAD_CLOSURE:
+                content = "🚧" + smsContent.getContent();
+                break;
+            case TRAFFIC_LIGHT:
+                content = "🚦" + smsContent.getContent();
+                break;
+            default:
+                content = "🤡" + smsContent.getContent();
+        }
         for (Subscriber subscriber : subscribers) {
             try {
                 final Message message = messageCreatorProvider.get(subscriber.getPhoneNumber(), content).create(this.twilioRestClient);

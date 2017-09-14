@@ -30,9 +30,8 @@ public class SmsRestClientFrenemyTest {
             new Subscriber("619-625-8494", null, null),
             new Subscriber("281-451-1243", null, null)
         );
-        String content = "Something happened!";
-
-        subject.sendSms(phoneNumbers, content);
+        SmsContent smsContent = new SmsContent("Something happened!");
+        subject.sendSms(phoneNumbers, smsContent);
 
         // check yo phone
     }
