@@ -5,6 +5,7 @@ import com.corelogic.hazardbot.subscriber.SubscriberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.StringUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,7 +25,7 @@ public class SubscriberLookupServiceImpl implements SubscriberLookupService {
             .map((subscriberEntity) -> new Subscriber(subscriberEntity.getPhoneNumber(),
                 subscriberEntity.getId(),
                 subscriberEntity.getPostalCode()))
-            .filter((subscriber) -> subscriber.getPostalCode() == null || subscriber.getPostalCode().equals(postalCode))
+            .filter((subscriber) -> StringUtils.isEmpty(subscriber.getPostalCode()) || subscriber.getPostalCode().equals(postalCode))
             .collect(Collectors.toList());
     }
 }
