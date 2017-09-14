@@ -2,6 +2,8 @@ package com.corelogic.hazardbot.notifier;
 
 import com.corelogic.hazardbot.Event;
 import com.corelogic.hazardbot.notification.NotificationService;
+import com.corelogic.hazardbot.persistence.SubscriberLookupService;
+import com.corelogic.hazardbot.subscriber.Subscriber;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -16,15 +18,18 @@ public class EventProducerService {
     private final CoaRoadClosureRepository coaRoadClosureRepository;
     private final CoaTrafficSignalFlashRepository coaTrafficSignalFlashRepository;
     private final NotificationService notificationService;
+    private final SubscriberLookupService subscriberLookupService;
 
     public EventProducerService(StubRoadClosureRepository stubRoadClosureRepository,
                                 CoaRoadClosureRepository coaRoadClosureRepository,
                                 CoaTrafficSignalFlashRepository coaTrafficSignalFlashRepository,
-                                NotificationService notificationService) {
+                                NotificationService notificationService,
+                                SubscriberLookupService subscriberLookupService) {
         this.stubRoadClosureRepository = stubRoadClosureRepository;
         this.coaRoadClosureRepository = coaRoadClosureRepository;
         this.coaTrafficSignalFlashRepository = coaTrafficSignalFlashRepository;
         this.notificationService = notificationService;
+        this.subscriberLookupService = subscriberLookupService;
     }
 
     @Scheduled(fixedRate = 30000)
@@ -43,7 +48,9 @@ public class EventProducerService {
             Event eventToNotify = outage.getEvent();
             log.info("Event to notify {}", eventToNotify.getContent());
 
-            notificationService.notifySubscribers(eventToNotify);
+            final List<Subscriber> subscribers = subscriberLookupService.getSubscribers();
+
+            notificationService.notifySubscribers(eventToNotify, subscribers);
         });
     }
 }

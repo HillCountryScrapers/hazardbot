@@ -1,5 +1,6 @@
 package com.corelogic.hazardbot.notification.smsclient;
 
+import com.corelogic.hazardbot.subscriber.Subscriber;
 import com.twilio.http.TwilioRestClient;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -25,7 +26,10 @@ public class SmsRestClientFrenemyTest {
 //    @Test
     public void sendSms() throws Exception {
         SmsRestClientImpl subject = new SmsRestClientImpl(twilioRestClient, new MessageCreatorProvider(smsCredentials));
-        List<String> phoneNumbers = Arrays.asList("619-625-8494", "281-451-1243");
+        List<Subscriber> phoneNumbers = Arrays.asList(
+            new Subscriber("619-625-8494", null, null),
+            new Subscriber("281-451-1243", null, null)
+        );
         String content = "Something happened!";
 
         subject.sendSms(phoneNumbers, content);

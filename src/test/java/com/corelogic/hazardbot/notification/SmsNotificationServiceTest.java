@@ -2,34 +2,28 @@ package com.corelogic.hazardbot.notification;
 
 import com.corelogic.hazardbot.Event;
 import com.corelogic.hazardbot.notification.smsclient.SmsRestClientImpl;
-import com.corelogic.hazardbot.persistence.SubscriberLookupService;
+import com.corelogic.hazardbot.subscriber.Subscriber;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class SmsNotificationServiceTest {
     @Test
     public void notifySubscribers() throws Exception {
         SmsRestClientImpl mocksmsRestClientImpl = mock(SmsRestClientImpl.class);
-        SubscriberLookupService mockSubscriberLookupService;
-        mockSubscriberLookupService = mock(SubscriberLookupService.class);
-        final List<String> numbers = Arrays.asList(
-                "123456789",
-                "234567894",
-                "789456123"
+        final List<Subscriber> subscribers = Arrays.asList(
+            new Subscriber("123456789", null, null),
+            new Subscriber("234567894", null, null),
+            new Subscriber("789456123", null, null)
         );
-        SmsNotificationService subject = new SmsNotificationService(
-                mocksmsRestClientImpl,
-                mockSubscriberLookupService
-        );
-        when(mockSubscriberLookupService.getSubscribers()).thenReturn(numbers);
+        SmsNotificationService subject = new SmsNotificationService(mocksmsRestClientImpl);
 
         Event event = new Event("Something happened!");
-        subject.notifySubscribers(event);
-        verify(mockSubscriberLookupService).getSubscribers();
-        verify(mocksmsRestClientImpl).sendSms(numbers, event.getContent());
+        subject.notifySubscribers(event, subscribers);
+        verify(mocksmsRestClientImpl).sendSms(subscribers, event.getContent());
     }
 }

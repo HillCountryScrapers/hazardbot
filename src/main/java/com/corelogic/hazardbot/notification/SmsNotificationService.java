@@ -2,27 +2,26 @@ package com.corelogic.hazardbot.notification;
 
 import com.corelogic.hazardbot.Event;
 import com.corelogic.hazardbot.notification.smsclient.SmsRestClient;
-import com.corelogic.hazardbot.persistence.SubscriberLookupService;
+import com.corelogic.hazardbot.subscriber.Subscriber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class SmsNotificationService implements NotificationService {
     private final SmsRestClient smsRestClient;
-    private final SubscriberLookupService subscriberLookupService;
 
     @Autowired
-    public SmsNotificationService(SmsRestClient smsRestClient,
-                                  SubscriberLookupService subscriberLookupService) {
+    public SmsNotificationService(SmsRestClient smsRestClient) {
         this.smsRestClient = smsRestClient;
-        this.subscriberLookupService = subscriberLookupService;
     }
 
     @Override
-    public void notifySubscribers(Event event) {
+    public void notifySubscribers(Event event, List<Subscriber> subscribers) {
         this.smsRestClient.sendSms(
-                this.subscriberLookupService.getSubscribers(),
-                event.getContent()
+            subscribers,
+            event.getContent()
         );
     }
 }

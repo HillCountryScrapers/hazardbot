@@ -1,7 +1,9 @@
 package com.corelogic.hazardbot.persistence;
 
+import com.corelogic.hazardbot.subscriber.Subscriber;
+
 import java.util.List;
 
 public interface SubscriberLookupService {
-    List<String> getSubscribers();
+    List<Subscriber> getSubscribers();
 }

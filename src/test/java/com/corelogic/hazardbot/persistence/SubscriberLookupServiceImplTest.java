@@ -1,5 +1,6 @@
 package com.corelogic.hazardbot.persistence;
 
+import com.corelogic.hazardbot.subscriber.Subscriber;
 import com.corelogic.hazardbot.subscriber.SubscriberEntity;
 import com.corelogic.hazardbot.subscriber.SubscriberRepository;
 import org.assertj.core.api.BDDAssertions;
@@ -30,7 +31,7 @@ public class SubscriberLookupServiceImplTest {
                         new SubscriberEntity("789", "78758")
                 )
         );
-        final List<String> subscribers = subject.getSubscribers();
+        final List<Subscriber> subscribers = subject.getSubscribers();
 
         verify(mockSubscriberRepository).findAll();
         BDDAssertions.then(subscribers).hasSize(3);

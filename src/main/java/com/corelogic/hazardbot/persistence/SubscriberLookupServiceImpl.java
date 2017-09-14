@@ -1,6 +1,6 @@
 package com.corelogic.hazardbot.persistence;
 
-import com.corelogic.hazardbot.subscriber.SubscriberEntity;
+import com.corelogic.hazardbot.subscriber.Subscriber;
 import com.corelogic.hazardbot.subscriber.SubscriberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -19,9 +19,11 @@ public class SubscriberLookupServiceImpl implements SubscriberLookupService {
         this.subscriberRepository = subscriberRepository;
     }
 
-    public List<String> getSubscribers() {
+    public List<Subscriber> getSubscribers() {
         return subscriberRepository.findAll().stream()
-                .map(SubscriberEntity::getPhoneNumber)
-                .collect(Collectors.toList());
+            .map((subscriberEntity) -> new Subscriber(subscriberEntity.getPhoneNumber(),
+                subscriberEntity.getId(),
+                subscriberEntity.getPostalCode()))
+            .collect(Collectors.toList());
     }
 }

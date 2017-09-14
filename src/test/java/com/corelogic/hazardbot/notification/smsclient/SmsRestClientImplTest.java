@@ -1,5 +1,6 @@
 package com.corelogic.hazardbot.notification.smsclient;
 
+import com.corelogic.hazardbot.subscriber.Subscriber;
 import com.twilio.http.TwilioRestClient;
 import com.twilio.rest.api.v2010.account.MessageCreator;
 import org.junit.Rule;
@@ -28,12 +29,14 @@ public class SmsRestClientImplTest {
 
         final MessageCreator mockMessageCreator = mock(MessageCreator.class);
         when(mockMessageCreatorProvider.get(any(), any())).thenReturn(
-                mockMessageCreator
+            mockMessageCreator
         );
 
         subject.sendSms(
-                Arrays.asList("123"),
-                "content"
+            Arrays.asList(
+                new Subscriber("123", null, null)
+            ),
+            "content"
         );
 
         verify(mockMessageCreatorProvider).get("123", "content");
@@ -49,14 +52,16 @@ public class SmsRestClientImplTest {
 
         final MessageCreator mockMessageCreator = mock(MessageCreator.class);
         when(mockMessageCreatorProvider.get(any(), any())).thenReturn(
-                mockMessageCreator
+            mockMessageCreator
         );
 
         when(mockMessageCreator.create(any())).thenThrow(new RuntimeException());
 
         subject.sendSms(
-                Arrays.asList("123"),
-                "content"
+            Arrays.asList(
+                new Subscriber("123", null, null)
+            ),
+            "content"
         );
     }
 
