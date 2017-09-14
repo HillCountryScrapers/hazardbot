@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Arrays;
+
 @Controller
 @RequestMapping("/smsTest")
 @Slf4j
@@ -36,7 +38,7 @@ public class SmsTestController {
         final Subscriber subscriber = getSubscriber(subscriberId);
 
         final Event event = new Event("Hello, this is CoreLogic HazardBot 🤖");
-        notificationService.notifySubscribers(event);
+        notificationService.notifySubscribers(event, Arrays.asList(subscriber));
 
         model.addAttribute("subscriber", subscriber);
 
