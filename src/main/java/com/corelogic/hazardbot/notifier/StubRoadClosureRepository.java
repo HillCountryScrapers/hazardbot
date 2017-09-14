@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class MockRoadClosureRepository implements  RoadClosureRepository {
+public class StubRoadClosureRepository implements  RoadClosureRepository {
 
     private List<RoadClosure> roadClosures = new ArrayList<>();
 

@@ -1,7 +1,6 @@
 package com.corelogic.hazardbot.notifier;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Profile;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +10,6 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 @Service
-@Profile("!mock")
 @Slf4j
 public class CoaRoadClosureRestService {
 

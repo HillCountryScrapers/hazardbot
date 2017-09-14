@@ -13,19 +13,28 @@ import java.util.List;
 @Slf4j
 public class EventProducerService {
 
-    private final MockRoadClosureRepository mockRoadClosureRepository;
+    private final StubRoadClosureRepository stubRoadClosureRepository;
+    private final CoaRoadClosureRepository coaRoadClosureRepository;
     private final NotificationService notificationService;
 
-    public EventProducerService(MockRoadClosureRepository mockRoadClosureRepository,
+    public EventProducerService(StubRoadClosureRepository stubRoadClosureRepository,
+                                CoaRoadClosureRepository coaRoadClosureRepository,
                                 NotificationService notificationService) {
-        this.mockRoadClosureRepository = mockRoadClosureRepository;
+        this.stubRoadClosureRepository = stubRoadClosureRepository;
+        this.coaRoadClosureRepository = coaRoadClosureRepository;
         this.notificationService = notificationService;
     }
 
     @Scheduled(fixedRate = 30000)
     public void checkForEvents() {
         log.info("Firing checkForEvents");
-        final List<RoadClosure> roadClosures = mockRoadClosureRepository.getNewRoadClosureEvents();
+        final List<RoadClosure> roadClosures = stubRoadClosureRepository.getNewRoadClosureEvents();
+        handleRoadClosures(roadClosures);
+        final List<RoadClosure> coaRoadClosures = coaRoadClosureRepository.getNewRoadClosureEvents();
+        handleRoadClosures(coaRoadClosures);
+    }
+
+    private void handleRoadClosures(List<RoadClosure> roadClosures) {
         roadClosures.stream().forEach((roadClosure) -> {
             Event roadClosureEvent = new Event(String.format("Road Closure: %s at %s", roadClosure.getLocation(), roadClosure.getCrossStreets()));
             log.info("Road Closure to notify {}", roadClosureEvent.getContent());

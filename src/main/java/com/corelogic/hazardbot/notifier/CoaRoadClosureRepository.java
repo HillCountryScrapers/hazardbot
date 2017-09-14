@@ -2,7 +2,6 @@ package com.corelogic.hazardbot.notifier;
 
 import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,7 +9,6 @@ import java.util.HashSet;
 import java.util.List;
 
 @Service
-@Profile("!mock")
 @Slf4j
 public class CoaRoadClosureRepository implements RoadClosureRepository {
 

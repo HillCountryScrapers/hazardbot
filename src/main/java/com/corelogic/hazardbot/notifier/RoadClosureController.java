@@ -15,22 +15,22 @@ import java.util.List;
 @RestController("/api/roadclosures")
 public class RoadClosureController {
 
-    private MockRoadClosureRepository mockRoadClosureRepository;
+    private StubRoadClosureRepository stubRoadClosureRepository;
 
-    public RoadClosureController(MockRoadClosureRepository mockRoadClosureRepository) {
-        this.mockRoadClosureRepository = mockRoadClosureRepository;
+    public RoadClosureController(StubRoadClosureRepository stubRoadClosureRepository) {
+        this.stubRoadClosureRepository = stubRoadClosureRepository;
     }
 
     @GetMapping()
     ResponseEntity<List<RoadClosure>> get() {
-        final List<RoadClosure> body = mockRoadClosureRepository.getNewRoadClosureEvents();
+        final List<RoadClosure> body = stubRoadClosureRepository.getNewRoadClosureEvents();
         log.info(Arrays.toString(body.toArray()));
         return ResponseEntity.ok(body);
     }
 
     @PostMapping()
     ResponseEntity post(@RequestBody RoadClosure roadClosure) {
-        mockRoadClosureRepository.add(roadClosure);
+        stubRoadClosureRepository.add(roadClosure);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 }
