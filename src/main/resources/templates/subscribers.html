@@ -1,12 +1,38 @@
-<h1>Subscribers</h1>
+<!DOCTYPE html>
+<html>
+<head>
+    <link type="text/css" th:href="@{/css/corelogic-ui.css}" rel="stylesheet" />
+</head>
+<body>
 
-<ul>
-    <li th:each="subscriber: ${subscribers}">
-        <form th:object="${subscriber}"
-              th:method="delete"
-              th:action="@{/subscribers/{id}(id=${subscriber.id})}">
-            <span th:text="${subscriber.phoneNumber}">512-555-1212</span>
-            <button>remove</button>
-        </form>
-    </li>
-</ul>
+<div class="container">
+
+    <h1>Subscribers</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Phone Number</th>
+            <th>Postal Code</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="subscriber: ${subscribers}">
+            <td th:text="${subscriber.phoneNumber}">512-555-1212</td>
+            <td th:text="${subscriber.postalCode}">90503</td>
+            <td>
+                <form th:object="${subscriber}"
+                      th:method="delete"
+                      th:action="@{/subscribers/{id}(id=${subscriber.id})}">
+                    <button class="btn btn-danger">remove</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>
+

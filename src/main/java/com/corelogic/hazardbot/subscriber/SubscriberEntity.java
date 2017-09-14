@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
@@ -16,9 +17,13 @@ public class SubscriberEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull
     private String phoneNumber;
 
-    public SubscriberEntity(String phoneNumber) {
+    private String postalCode;
+
+    public SubscriberEntity(String phoneNumber, String postalCode) {
         this.phoneNumber = phoneNumber;
+        this.postalCode = postalCode;
     }
 }

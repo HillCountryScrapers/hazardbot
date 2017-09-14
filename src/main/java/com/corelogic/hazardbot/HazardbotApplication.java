@@ -8,7 +8,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class HazardbotApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(HazardbotApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(HazardbotApplication.class, args);
+    }
 }

@@ -24,7 +24,7 @@ public class SubscriberServiceTest {
     @Test
     public void create() throws Exception {
         int size = subscriberRepository.findAll().size();
-        final Subscriber subscriber = new Subscriber("123", 1L);
+        final Subscriber subscriber = new Subscriber("123", 1L, "78758");
         subject.create(subscriber);
 
         then(subscriberRepository.findAll()).hasSize(size + 1);
@@ -33,7 +33,7 @@ public class SubscriberServiceTest {
     @Test
     public void getSubscribers() throws Exception {
         subscriberRepository.deleteAll();
-        subscriberRepository.save(new SubscriberEntity("123"));
+        subscriberRepository.save(new SubscriberEntity("123", "78758"));
 
         then(subscriberRepository.findAll()).hasSize(1);
         then(subscriberRepository.findAll().get(0).getPhoneNumber())
@@ -44,7 +44,7 @@ public class SubscriberServiceTest {
     public void remove() throws Exception {
         subscriberRepository.deleteAll();
         final SubscriberEntity subscriberEntity =
-            subscriberRepository.save(new SubscriberEntity("123"));
+            subscriberRepository.save(new SubscriberEntity("123", "78758"));
 
         subject.remove(subscriberEntity.getId());
 

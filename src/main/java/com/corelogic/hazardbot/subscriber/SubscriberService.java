@@ -18,14 +18,21 @@ public class SubscriberService {
 
     public void create(Subscriber subscriber) {
         subscriberRepository.saveAndFlush(
-            new SubscriberEntity(subscriber.getPhoneNumber())
+            new SubscriberEntity(
+                subscriber.getPhoneNumber(),
+                subscriber.getPostalCode()
+            )
         );
     }
 
     public List<Subscriber> getSubscribers() {
         return subscriberRepository.findAll().stream()
             .map(
-                subscriberEntity -> new Subscriber(subscriberEntity.getPhoneNumber(), subscriberEntity.getId())
+                subscriberEntity -> new Subscriber(
+                    subscriberEntity.getPhoneNumber(),
+                    subscriberEntity.getId(),
+                    subscriberEntity.getPostalCode()
+                )
             )
             .collect(Collectors.toList());
     }

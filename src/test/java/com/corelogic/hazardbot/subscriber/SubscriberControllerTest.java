@@ -54,7 +54,9 @@ public class SubscriberControllerTest {
     @Test
     public void removeSubscriber() throws Exception {
         final SubscriberEntity subscriberEntity =
-            subscriberRepository.saveAndFlush(new SubscriberEntity("512-111-1111"));
+            subscriberRepository.saveAndFlush(
+                new SubscriberEntity("512-111-1111", "78758")
+            );
 
         mockMvc.perform(
             delete("/subscribers/{id}", subscriberEntity.getId())

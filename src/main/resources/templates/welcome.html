@@ -1,16 +1,49 @@
-<p>Welcome to Hazard Bot!</p>
+<!DOCTYPE html>
+<html>
+<head>
+    <link type="text/css" th:href="@{/css/corelogic-ui.css}" rel="stylesheet"/>
+</head>
+<body>
 
-<p>Wanna subscribe?</p>
+<div class="container">
+    <h1>Welcome to Hazard Bot!</h1>
 
-<form action="#" method="post" th:action="@{/subscribers}" th:object="${subscriber}">
-    <label>
-        Cell number:
-        <input name="phoneNumber"
-               th:field="*{phoneNumber}"
-               type="tel"
-               pattern="^\d{3}-\d{3}-\d{4}$"
-               required="required"
-               title="format: xxx-xxx-xxxx"/>
-    </label>
-    <button>Subscribe</button>
-</form>
+    <form th:method="post"
+          th:action="@{/subscribers}"
+          th:object="${subscriber}">
+        <div class="form-group">
+            <label>
+                Cell number:
+                <span class="input-group">
+                    <i class="fa fa-phone left-icon"></i>
+                    <input class="form-control"
+                           name="phoneNumber"
+                           th:field="*{phoneNumber}"
+                           type="tel"
+                           pattern="^\d{3}-\d{3}-\d{4}$"
+                           required="required"
+                           placeholder="xxx-xxx-xxxx"/>
+                </span>
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label>
+                Postal Code (optional):
+                <input class="form-control"
+                       name="postalCode"
+                       th:field="*{postalCode}"
+                       type="text"
+                       pattern="^\d{5}$"
+                       placeholder="xxxxx"/>
+                <small style="color: gray;">Enter postal code to limit notification scope</small>
+            </label>
+        </div>
+
+        <button class="btn btn-primary">Subscribe</button>
+    </form>
+
+</div>
+</body>
+</html>
+

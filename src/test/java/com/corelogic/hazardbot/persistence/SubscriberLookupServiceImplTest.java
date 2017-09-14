@@ -25,9 +25,9 @@ public class SubscriberLookupServiceImplTest {
 
         when(mockSubscriberRepository.findAll()).thenReturn(
                 Arrays.asList(
-                        new SubscriberEntity("123"),
-                        new SubscriberEntity("456"),
-                        new SubscriberEntity("789")
+                        new SubscriberEntity("123", "78758"),
+                        new SubscriberEntity("456", "78758"),
+                        new SubscriberEntity("789", "78758")
                 )
         );
         final List<String> subscribers = subject.getSubscribers();
