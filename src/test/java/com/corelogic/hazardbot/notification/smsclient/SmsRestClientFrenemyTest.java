@@ -14,18 +14,17 @@ public class SmsRestClientFrenemyTest {
     //@Test
     public void sendSms() throws Exception {
         SmsCredentials smsCredentials = new SmsCredentials();
-        System.out.print("Twilio Number: "+smsCredentials.getPhoneNumber());
+        System.out.print("Twilio Number: " + smsCredentials.getPhoneNumber());
         SmsRestClientImpl subject = new SmsRestClientImpl(smsCredentials);
-        List<Long> phoneNumbers = Arrays.asList(6196258494l, 2814511243l);
+        List<String> phoneNumbers = Arrays.asList("619-625-8494", "281-451-1243");
         String content = "Something happened!";
 
-        Map<Long, String> expected = new HashMap<>();
-        expected.put(6196258494l, "queued");
-        expected.put(2814511243l, "queued");
+        Map<String, String> expected = new HashMap<>();
+        expected.put("619-625-8494", "queued");
+        expected.put("281-451-1243", "queued");
 
-        Map<Long, String> results = subject.sendSms(phoneNumbers, content);
+        Map<String, String> results = subject.sendSms(phoneNumbers, content);
         assertThat(results.size(), equalTo(phoneNumbers.size()));
-        assertThat(results,equalTo(expected));
-
+        assertThat(results, equalTo(expected));
     }
 }

@@ -10,11 +10,11 @@ import java.util.List;
 @Profile("mock")
 public class MockSubscriberLookupService implements SubscriberLookupService {
     @Override
-    public List<Long> getSubscribers() {
+    public List<String> getSubscribers() {
         return Arrays.asList(
-                123456789l,
-                234567894l,
-                789456123l
+                "123456789",
+                "234567894",
+                "789456123"
         );
     }
 }

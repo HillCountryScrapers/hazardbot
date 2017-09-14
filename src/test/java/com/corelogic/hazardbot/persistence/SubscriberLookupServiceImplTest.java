@@ -30,7 +30,7 @@ public class SubscriberLookupServiceImplTest {
                         new SubscriberEntity("789")
                 )
         );
-        final List<Long> subscribers = subject.getSubscribers();
+        final List<String> subscribers = subject.getSubscribers();
 
         verify(mockSubscriberRepository).findAll();
         BDDAssertions.then(subscribers).hasSize(3);

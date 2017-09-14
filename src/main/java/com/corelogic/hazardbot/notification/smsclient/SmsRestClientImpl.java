@@ -29,11 +29,11 @@ public class SmsRestClientImpl implements SmsRestClient {
     }
 
     @Override
-    public Map<Long, String> sendSms(List<Long> numbers, String content)throws SmsNotificationException {
-        Map<Long, String> messages = new HashMap<>();
-        for (Long number : numbers) {
+    public Map<String, String> sendSms(List<String> numbers, String content)throws SmsNotificationException {
+        Map<String, String> messages = new HashMap<>();
+        for (String number : numbers) {
             MessageCreator messageCreator = new MessageCreator(
-                    new PhoneNumber(number.toString()),
+                    new PhoneNumber(number),
                     new PhoneNumber(this.twilioNumber),
                     content);
             // messageCreator.setMediaUrl(mediaUrl);

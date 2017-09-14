@@ -16,10 +16,10 @@ public class SmsNotificationServiceTest {
         SmsRestClientImpl mocksmsRestClientImpl = mock(SmsRestClientImpl.class);
         SubscriberLookupService mockSubscriberLookupService;
         mockSubscriberLookupService = mock(SubscriberLookupService.class);
-        final List<Long> numbers = Arrays.asList(
-                123456789l,
-                234567894l,
-                789456123l
+        final List<String> numbers = Arrays.asList(
+                "123456789",
+                "234567894",
+                "789456123"
         );
         SmsNotificationService subject = new SmsNotificationService(
                 mocksmsRestClientImpl,
