@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class StubRoadClosureRepository implements  RoadClosureRepository {
+public class StubRoadClosureRepository implements RoadClosureRepository {
 
     private List<RoadClosure> roadClosures = new ArrayList<>();
 
@@ -16,6 +16,8 @@ public class StubRoadClosureRepository implements  RoadClosureRepository {
 
     @Override
     public List<RoadClosure> getNewRoadClosureEvents() {
-        return roadClosures;
+        List<RoadClosure> roadClosuresToReturn = new ArrayList<>(roadClosures);
+        roadClosures.clear();
+        return roadClosuresToReturn;
     }
 }
