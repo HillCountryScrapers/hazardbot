@@ -32,10 +32,10 @@ public class SubscriberController {
         return new ModelAndView("redirect:/subscribers");
     }
 
-    @DeleteMapping
-    public ModelAndView removeSubscriber(@ModelAttribute Subscriber subscriber) {
-        logger.info("Removing subscriber {}", subscriber.getPhoneNumber());
-        subscriberService.remove(subscriber);
+    @DeleteMapping("{id}")
+    public ModelAndView removeSubscriber(@PathVariable Long id) {
+        logger.info("Removing subscriber id={}", id);
+        subscriberService.remove(id);
         return new ModelAndView("redirect:/subscribers");
     }
 

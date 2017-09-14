@@ -1,7 +1,12 @@
 <h1>Subscribers</h1>
 
 <ul>
-    <li th:each="subscriber: ${subscribers}"
-        th:text="${subscriber.phoneNumber}">512-555-1212
+    <li th:each="subscriber: ${subscribers}">
+        <form th:object="${subscriber}"
+              th:method="delete"
+              th:action="@{/subscribers/{id}(id=${subscriber.id})}">
+            <span th:text="${subscriber.phoneNumber}">512-555-1212</span>
+            <button>remove</button>
+        </form>
     </li>
 </ul>

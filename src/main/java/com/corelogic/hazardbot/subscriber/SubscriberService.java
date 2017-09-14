@@ -22,13 +22,13 @@ public class SubscriberService {
 
     public List<Subscriber> getSubscribers() {
         return subscriberRepository.findAll().stream()
-                .map(subscriberEntity -> new Subscriber(subscriberEntity.getPhoneNumber()))
-                .collect(Collectors.toList());
+            .map(
+                subscriberEntity -> new Subscriber(subscriberEntity.getPhoneNumber(), subscriberEntity.getId())
+            )
+            .collect(Collectors.toList());
     }
 
-    public void remove(Subscriber subscriber) {
-        final List<SubscriberEntity> subscriberEntities =
-                subscriberRepository.findAllByPhoneNumber(subscriber.getPhoneNumber());
-        subscriberRepository.delete(subscriberEntities);
+    public void remove(long subscriberId) {
+        subscriberRepository.delete(subscriberId);
     }
 }
