@@ -22,10 +22,10 @@ public class SubscriberLookupServiceImpl implements SubscriberLookupService {
 
     public List<Subscriber> getSubscribers(String postalCode) {
         return subscriberRepository.findAll().stream()
-            .map((subscriberEntity) -> new Subscriber(subscriberEntity.getPhoneNumber(),
-                subscriberEntity.getId(),
-                subscriberEntity.getPostalCode()))
-            .filter((subscriber) -> StringUtils.isEmpty(subscriber.getPostalCode()) || subscriber.getPostalCode().equals(postalCode))
+            .filter((subscriberEntity) -> StringUtils.isEmpty(postalCode) || StringUtils.isEmpty(subscriberEntity.getPostalCode()) || subscriberEntity.getPostalCode().equals(postalCode))
+            .map((subscriber) -> new Subscriber(subscriber.getPhoneNumber(),
+                subscriber.getId(),
+                subscriber.getPostalCode()))
             .collect(Collectors.toList());
     }
 }

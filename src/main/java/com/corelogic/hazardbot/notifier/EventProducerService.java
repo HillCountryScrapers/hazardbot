@@ -44,7 +44,7 @@ public class EventProducerService {
     }
 
     private void handleOutage(List<? extends Outage> outages) {
-        outages.stream().forEach((outage) -> {
+        outages.forEach((outage) -> {
             Event eventToNotify = outage.getEvent();
             log.info("Event to notify {} for postal code {}", eventToNotify.getContent(), outage.getPostalCode());
             final List<Subscriber> subscribers = subscriberLookupService.getSubscribers(outage.getPostalCode());

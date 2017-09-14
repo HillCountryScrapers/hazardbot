@@ -4,6 +4,7 @@ import com.corelogic.hazardbot.subscriber.Subscriber;
 import com.corelogic.hazardbot.subscriber.SubscriberEntity;
 import com.corelogic.hazardbot.subscriber.SubscriberRepository;
 import org.assertj.core.api.BDDAssertions;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -20,10 +21,16 @@ public class SubscriberLookupServiceImplTest {
     @Mock
     private SubscriberRepository mockSubscriberRepository;
 
+    private SubscriberLookupServiceImpl subject;
+
+    @Before
+    public void setUp() throws Exception {
+        subject = new SubscriberLookupServiceImpl(mockSubscriberRepository);
+
+    }
+
     @Test
     public void getSubscribers() throws Exception {
-        SubscriberLookupServiceImpl subject = new SubscriberLookupServiceImpl(mockSubscriberRepository);
-
         when(mockSubscriberRepository.findAll()).thenReturn(
             Arrays.asList(
                 new SubscriberEntity("123", "78758"),
@@ -36,6 +43,38 @@ public class SubscriberLookupServiceImplTest {
         final List<Subscriber> subscribers = subject.getSubscribers("78758");
 
         verify(mockSubscriberRepository).findAll();
+        BDDAssertions.then(subscribers).hasSize(4);
+    }
+
+    @Test
+    public void getSubscribers_whenOutageZipCodeIsNull() throws Exception {
+        when(mockSubscriberRepository.findAll()).thenReturn(
+            Arrays.asList(
+                new SubscriberEntity("123", "78758"),
+                new SubscriberEntity("456", "78758"),
+                new SubscriberEntity("789", "78739"),
+                new SubscriberEntity("789", null)
+            )
+        );
+
+        final List<Subscriber> subscribers = subject.getSubscribers(null);
+
+        BDDAssertions.then(subscribers).hasSize(4);
+    }
+
+    @Test
+    public void getSubscribers_whenOutageZipCodeIsEmptyString() throws Exception {
+        when(mockSubscriberRepository.findAll()).thenReturn(
+            Arrays.asList(
+                new SubscriberEntity("123", "78758"),
+                new SubscriberEntity("456", "78758"),
+                new SubscriberEntity("789", "78739"),
+                new SubscriberEntity("789", null)
+            )
+        );
+
+        final List<Subscriber> subscribers = subject.getSubscribers("");
+
         BDDAssertions.then(subscribers).hasSize(4);
     }
 }
