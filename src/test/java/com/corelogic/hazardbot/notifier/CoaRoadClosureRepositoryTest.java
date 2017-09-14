@@ -19,7 +19,7 @@ public class CoaRoadClosureRepositoryTest {
     CoaRoadClosureRestService mockCoaRoadClosureRestService;
 
     @Test
-    public void name() throws Exception {
+    public void getNewRoadClosureEvents_returnsClosuresNotAlreadyInList() throws Exception {
 
         List<RoadClosure> oldRoadClosureList = Arrays.asList(
                 new RoadClosure("location1", "cross streets1")

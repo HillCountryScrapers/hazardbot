@@ -15,13 +15,16 @@ public class EventProducerService {
 
     private final StubRoadClosureRepository stubRoadClosureRepository;
     private final CoaRoadClosureRepository coaRoadClosureRepository;
+    private final CoaTrafficSignalFlashRepository coaTrafficSignalFlashRepository;
     private final NotificationService notificationService;
 
     public EventProducerService(StubRoadClosureRepository stubRoadClosureRepository,
                                 CoaRoadClosureRepository coaRoadClosureRepository,
+                                CoaTrafficSignalFlashRepository coaTrafficSignalFlashRepository,
                                 NotificationService notificationService) {
         this.stubRoadClosureRepository = stubRoadClosureRepository;
         this.coaRoadClosureRepository = coaRoadClosureRepository;
+        this.coaTrafficSignalFlashRepository = coaTrafficSignalFlashRepository;
         this.notificationService = notificationService;
     }
 
@@ -32,6 +35,20 @@ public class EventProducerService {
         handleRoadClosures(roadClosures);
         final List<RoadClosure> coaRoadClosures = coaRoadClosureRepository.getNewRoadClosureEvents();
         handleRoadClosures(coaRoadClosures);
+        final List<FlashingSignal> coaTrafficSignalFlash = coaTrafficSignalFlashRepository.getNewTrafficSignalFlash();
+        handleFlashingSignals(coaTrafficSignalFlash);
+    }
+
+    private void handleFlashingSignals(List<FlashingSignal> coaTrafficSignalFlash) {
+        coaTrafficSignalFlash.stream().forEach((trafficSignal) -> {
+            Event flashingSignalEvent = new Event(String.format("Traffic signal outage at %s", trafficSignal.getLocationName()));
+            log.info("Flashing Signal Event to notify {}", flashingSignalEvent.getContent());
+            try {
+                notificationService.notifySubscribers(flashingSignalEvent);
+            } catch (SmsNotificationException e) {
+                log.error(e.getMessage(), e);
+            }
+        });
     }
 
     private void handleRoadClosures(List<RoadClosure> roadClosures) {
