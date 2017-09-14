@@ -9,7 +9,7 @@
     <div class="container-fluid">
         <h1 class="primary-title">
             <i class="fa fa-hand-spock-o" aria-hidden="true"></i>
-            CoreLogic HazardBot
+            <a th:href="@{/}">CoreLogic HazardBot</a>
         </h1>
     </div>
 </div>
@@ -22,7 +22,7 @@
         <tr>
             <th>Phone Number</th>
             <th>Postal Code</th>
-            <th></th>
+            <th colspan="2"></th>
         </tr>
         </thead>
         <tbody>
@@ -34,6 +34,13 @@
                       th:method="delete"
                       th:action="@{/subscribers/{id}(id=${subscriber.id})}">
                     <button class="btn btn-danger">remove</button>
+                </form>
+            </td>
+            <td>
+                <form th:object="${subscriber}"
+                      th:method="post"
+                      th:action="@{/smsTest(subscriberId=${subscriber.id})}">
+                    <button class="btn btn-info">Test SMS</button>
                 </form>
             </td>
         </tr>
