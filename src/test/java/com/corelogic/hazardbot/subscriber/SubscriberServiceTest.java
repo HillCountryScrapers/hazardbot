@@ -48,7 +48,7 @@ public class SubscriberServiceTest {
         subscriberRepository.deleteAll();
         subscriberRepository.save(new SubscriberEntity("5125551212", "78758"));
 
-        then(subject.getSubscriber("5125551212").getPhoneNumber()).isEqualTo("5125551212");
+        then(subject.getSubscriber("5125551212").getPhoneNumber()).isEqualTo("512-555-1212");
     }
 
     @Test

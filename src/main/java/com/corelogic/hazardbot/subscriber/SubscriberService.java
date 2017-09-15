@@ -30,13 +30,7 @@ public class SubscriberService {
 
     public List<Subscriber> getSubscribers() {
         return subscriberRepository.findAll().stream()
-            .map(
-                subscriberEntity -> new Subscriber(
-                    phoneNumberFormatter.format(subscriberEntity.getPhoneNumber()),
-                    subscriberEntity.getId(),
-                    subscriberEntity.getPostalCode()
-                )
-            )
+            .map(this::transformEntity)
             .collect(Collectors.toList());
     }
 
@@ -50,11 +44,21 @@ public class SubscriberService {
         final SubscriberEntity subscriberEntity =
             subscriberRepository.findByPhoneNumber(strippedPhoneNumber);
 
+        return transformEntity(subscriberEntity);
+    }
+
+    private Subscriber transformEntity(SubscriberEntity subscriberEntity) {
         return subscriberEntity == null ? null : new Subscriber(
-            subscriberEntity.getPhoneNumber(),
+            phoneNumberFormatter.format(subscriberEntity.getPhoneNumber()),
             subscriberEntity.getId(),
             subscriberEntity.getPostalCode()
         );
     }
+
+    public Subscriber getSubscriber(Long subscriberId) {
+        final SubscriberEntity subscriberEntity = subscriberRepository.getOne(subscriberId);
+        return transformEntity(subscriberEntity);
+    }
+
 
 }
