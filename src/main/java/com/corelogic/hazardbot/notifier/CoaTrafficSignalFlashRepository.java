@@ -10,11 +10,11 @@ import java.util.List;
 @Component
 public class CoaTrafficSignalFlashRepository {
     private final CoaTrafficSignalFlashRestService coaTrafficSignalFlashRestService;
-    private final List<FlashingSignal> oldFlashingSignals;
+    private List<FlashingSignal> existingFlashingSignals;
 
     public CoaTrafficSignalFlashRepository(CoaTrafficSignalFlashRestService coaTrafficSignalFlashRestService) {
         this.coaTrafficSignalFlashRestService = coaTrafficSignalFlashRestService;
-        oldFlashingSignals = coaTrafficSignalFlashRestService.getAllFlashingSignals();
+        existingFlashingSignals = coaTrafficSignalFlashRestService.getAllFlashingSignals();
     }
 
     public List<FlashingSignal> getNewTrafficSignalFlash() {
@@ -22,8 +22,10 @@ public class CoaTrafficSignalFlashRepository {
 
         final Sets.SetView<FlashingSignal> difference = Sets.difference(
                 new HashSet<>(newFlashingSignals),
-                new HashSet<>(oldFlashingSignals)
+                new HashSet<>(existingFlashingSignals)
         );
+
+        existingFlashingSignals = newFlashingSignals;
 
         return new ArrayList<>(difference);
     }
